@@ -1,3 +1,3 @@
-# listy
+# listly
 
 Ranked list maker
