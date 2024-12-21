@@ -32,3 +32,5 @@ export function language(key: Key | string, fallback?: string): string {
 
   return lang[key as Key] || fallback || key;
 }
+
+export const l = language;

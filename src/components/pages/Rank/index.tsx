@@ -2,7 +2,7 @@ import { Link } from 'wouter';
 import { useLocalStorage } from '@mantine/hooks';
 import { Container, Text, Table, Group } from '@mantine/core';
 
-import { language } from '../../../modules/language';
+import { l } from '../../../modules/language';
 
 function Rank() {
   const [list] = useLocalStorage<string[]>({
@@ -13,15 +13,15 @@ function Rank() {
   return (
     <Container>
       <Text size="xl" fw={700} mb="md">
-        {language('page.rank.title')}
+        {l('page.rank.title')}
       </Text>
 
       {list && Array.isArray(list) && list.length > 0 ? (
         <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th w={60}>{language('page.rank.table.rank')}</Table.Th>
-              <Table.Th>{language('page.rank.table.title')}</Table.Th>
+              <Table.Th w={60}>{l('page.rank.table.rank')}</Table.Th>
+              <Table.Th>{l('page.rank.table.title')}</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -35,8 +35,8 @@ function Rank() {
         </Table>
       ) : (
         <Group>
-          <Text>{language('page.rank.empty')}</Text>
-          <Link href="/">{language('page.rank.home')}</Link>
+          <Text>{l('page.rank.empty')}</Text>
+          <Link href="/">{l('page.rank.home')}</Link>
         </Group>
       )}
     </Container>

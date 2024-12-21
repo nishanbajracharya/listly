@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { useLocalStorage, useDisclosure } from '@mantine/hooks';
 import { Container, Text, Textarea, Button, Flex, Modal } from '@mantine/core';
 
-import { language } from '../../../modules/language';
+import { l } from '../../../modules/language';
 
 function Home() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -56,9 +56,9 @@ function Home() {
         yOffset="30vh"
         opened={opened}
         onClose={close}
-        title={language('page.home.modal.title')}
+        title={l('page.home.modal.title')}
       >
-        <Text>{language('page.home.modal.text')}</Text>
+        <Text>{l('page.home.modal.text')}</Text>
         <Flex
           mb="md"
           justify="space-between"
@@ -75,15 +75,15 @@ function Home() {
             }}
             variant="filled"
           >
-            {language('page.home.modal.yes')}
+            {l('page.home.modal.yes')}
           </Button>
           <Button variant="outline" color="blue" onClick={close} mt="md">
-            {language('page.home.modal.no')}
+            {l('page.home.modal.no')}
           </Button>
         </Flex>
       </Modal>
       <Text size="xl" fw={700} mb="md">
-        {language('page.home.title')}
+        {l('page.home.title')}
       </Text>
       <form onSubmit={form.onSubmit(onSubmit)}>
         <Textarea
@@ -92,8 +92,8 @@ function Home() {
           maxRows={20}
           key={form.key('list')}
           {...form.getInputProps('list')}
-          label={language('page.home.subtitle')}
-          placeholder={language('page.home.textArea.placeholder')}
+          label={l('page.home.subtitle')}
+          placeholder={l('page.home.textArea.placeholder')}
         />
         <Flex
           mb="md"
@@ -108,10 +108,10 @@ function Home() {
             variant="filled"
             flex={{ md: 1 }}
           >
-            {language('page.home.button.save')}
+            {l('page.home.button.save')}
           </Button>
           <Button variant="outline" color="red" onClick={open} mt="md">
-            {language('page.home.button.clear')}
+            {l('page.home.button.clear')}
           </Button>
         </Flex>
       </form>

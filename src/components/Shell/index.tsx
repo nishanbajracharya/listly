@@ -13,7 +13,7 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 
-import { language } from '../../modules/language';
+import { l } from '../../modules/language';
 
 import Nav from '../Router/Nav';
 import RouteSwitch from '../Router/RouteSwitch';
@@ -52,7 +52,7 @@ function Shell() {
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <PiRanking size={30} />
           <Text size="xl" ml="sm" flex={1}>
-            {language('base.app.title')}
+            {l('base.app.title')}
           </Text>
           <ActionIcon variant="default" onClick={() => toggleColorScheme()}>
             {colorScheme === 'light' ? (
