@@ -8,6 +8,7 @@ import {
   Text,
   Group,
   Burger,
+  Tooltip,
   AppShell,
   ActionIcon,
   useMantineColorScheme,
@@ -55,13 +56,21 @@ function Shell() {
           <Text size="xl" ml="sm" flex={1}>
             {l('base.app.title')}
           </Text>
-          <ActionIcon variant="default" onClick={() => toggleColorScheme()}>
-            {colorScheme === 'light' ? (
-              <CiDark size={25} />
-            ) : (
-              <CiLight size={25} />
-            )}
-          </ActionIcon>
+          <Tooltip
+            label={
+              colorScheme === 'light'
+                ? l('shell.darkMode')
+                : l('shell.lightMode')
+            }
+          >
+            <ActionIcon variant="default" onClick={() => toggleColorScheme()}>
+              {colorScheme === 'light' ? (
+                <CiDark size={25} />
+              ) : (
+                <CiLight size={25} />
+              )}
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </AppShell.Header>
 

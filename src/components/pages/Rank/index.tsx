@@ -1,6 +1,15 @@
 import { Link } from 'wouter';
 import { useLocalStorage } from '@mantine/hooks';
-import { Container, Text, Table, Group, Button } from '@mantine/core';
+import {
+  Text,
+  Table,
+  Group,
+  Button,
+  Tooltip,
+  Container,
+  ActionIcon,
+} from '@mantine/core';
+import { IoCopy } from 'react-icons/io5';
 
 import { l } from '../../../modules/language';
 
@@ -10,6 +19,10 @@ function Rank() {
     defaultValue: [],
   });
 
+  function copyToClipboard() {
+    navigator.clipboard.writeText(list.join('\n'));
+  }
+
   return (
     <Container>
       <Text size="xl" fw={700} mb="md">
@@ -17,22 +30,31 @@ function Rank() {
       </Text>
 
       {list && Array.isArray(list) && list.length > 0 ? (
-        <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th w={60}>{l('page.rank.table.rank')}</Table.Th>
-              <Table.Th>{l('page.rank.table.title')}</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {list.map((item, index) => (
-              <Table.Tr key={index}>
-                <Table.Td>{index + 1}</Table.Td>
-                <Table.Td>{item}</Table.Td>
+        <>
+          <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th w={60}>{l('page.rank.table.rank')}</Table.Th>
+                <Table.Th>{l('page.rank.table.title')}</Table.Th>
               </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {list.map((item, index) => (
+                <Table.Tr key={index}>
+                  <Table.Td>{index + 1}</Table.Td>
+                  <Table.Td>{item}</Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+          <Group mt="lg" justify="flex-end">
+            <Tooltip label={l('page.rank.copy')}>
+              <ActionIcon variant="default" onClick={copyToClipboard}>
+                <IoCopy size={15} />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
+        </>
       ) : (
         <Group>
           <Text>{l('page.rank.empty')}</Text>

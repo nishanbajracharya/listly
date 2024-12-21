@@ -3,6 +3,8 @@
   "shell.nav.home": "Home",
   "shell.nav.compare": "Compare",
   "shell.nav.rank": "Rank",
+  "shell.darkMode": "Dark Mode",
+  "shell.lightMode": "Light Mode",
   "page.home.title": "Enter a list of items to compare",
   "page.home.subtitle": "Either comma separated or new line separated list of items to compare",
   "page.home.textArea.placeholder": "Place items here",
@@ -24,5 +26,6 @@
   "page.rank.table.rank": "Rank",
   "page.rank.table.title": "Title",
   "page.rank.empty": "No items to rank. Please enter a list of items to compare.",
-  "page.rank.home": "Go home"
+  "page.rank.home": "Go home",
+  "page.rank.copy": "Copy to Clipboard"
 }
