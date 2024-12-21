@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { CiDark } from 'react-icons/ci';
 import { CiLight } from 'react-icons/ci';
 import { PiRanking } from 'react-icons/pi';
@@ -18,7 +19,7 @@ import Nav from '../Router/Nav';
 import RouteSwitch from '../Router/RouteSwitch';
 
 function Shell() {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle, close }] = useDisclosure();
 
   const { setColorScheme, clearColorScheme, colorScheme, toggleColorScheme } =
     useMantineColorScheme();
@@ -29,6 +30,12 @@ function Shell() {
       clearColorScheme();
     };
   });
+
+  const [location] = useLocation();
+
+  useEffect(() => {
+    close();
+  }, [location, close]);
 
   return (
     <AppShell

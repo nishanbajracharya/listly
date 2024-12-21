@@ -2,5 +2,9 @@
   "base.app.title": "Listly",
   "shell.nav.home": "Home",
   "shell.nav.compare": "Compare",
-  "shell.nav.rank": "Rank"
+  "shell.nav.rank": "Rank",
+  "page.home.title": "Enter a list of items to compare",
+  "page.home.subtitle": "Either comma separated or new line separated list of items to compare",
+  "page.compare.title": "Compare",
+  "page.rank.title": "Rank"
 }
