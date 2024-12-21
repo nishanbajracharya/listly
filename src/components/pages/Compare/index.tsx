@@ -1,3 +1,4 @@
+import { Link } from 'wouter';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from '@mantine/hooks';
 import {
@@ -5,13 +6,15 @@ import {
   Card,
   Flex,
   Group,
+  Switch,
   Button,
+  Tooltip,
   Container,
   UnstyledButton,
 } from '@mantine/core';
 
 import { l } from '../../../modules/language';
-import { Link } from 'wouter';
+import Ranking from '../../../modules/Ranking';
 
 function Compare() {
   const [list, setList] = useLocalStorage<string[]>({
@@ -22,61 +25,36 @@ function Compare() {
   const [gameState, setGameState] = useState<'START' | 'RUNNING' | 'DONE'>(
     'START'
   );
-  const [matchIndex, setMatchIndex] = useState(-1);
-  const [matches, setMatches] = useState<string[][]>([]);
-  const [results, setResults] = useState<Record<string, number>>({});
+  const [match, setMatch] = useState<string[]>();
+  const [ranking, setRanking] = useState<Ranking>();
+  const [quickCompare, setQuickCompare] = useState(false);
 
   useEffect(() => {
-    // Generate matches
-    const generatedMatches = randomizeMatches(getMatches(list));
-    setMatches(generatedMatches);
+    if (list && list.length > 0) {
+      const ranking = new Ranking(list);
+      setRanking(ranking);
 
-    const state = list.reduce((acc, item) => {
-      acc[item] = 0;
-      return acc;
-    }, {} as Record<string, number>);
-    setResults(state);
-  }, [list]);
-
-  // return unique grouping of each item with other in a pair of two
-  function getMatches(list: string[]) {
-    return list
-      .map((item, index) => {
-        const matches = list.slice(index + 1).map((match) => [item, match]);
-        return matches;
-      })
-      .flat();
-  }
-
-  // return randomized matches
-  function randomizeMatches(matches: string[][]) {
-    return matches.sort(() => Math.random() - 0.5);
-  }
-
-  function runMatch(selected: string) {
-    // Update results
-    results[selected] += 1;
-
-    setResults(results);
-    setMatchIndex((index) => index + 1);
-
-    // Check if all matches are done
-    if (matchIndex === matches.length - 1) {
-      setGameState('DONE');
-
-      // Save results
-      const sortedResults = Object.entries(results).sort(
-        ([, a], [, b]) => b - a
-      );
-      const rankedList = sortedResults.map(([item]) => item);
-
-      setList(rankedList);
+      setMatch(ranking.getMatch());
     }
-  }
+  }, [list]);
 
   function startComparison() {
     setGameState('RUNNING');
-    setMatchIndex(0);
+  }
+
+  function runMatch(winner: string = '', loser: string = '') {
+    if (ranking && winner && loser) {
+      ranking.runMatch(winner, loser, quickCompare);
+
+      const nextMatch = ranking.getMatch();
+
+      if (!nextMatch) {
+        setGameState('DONE');
+        return setList(ranking.getResult());
+      }
+
+      setMatch(nextMatch);
+    }
   }
 
   return (
@@ -101,27 +79,56 @@ function Compare() {
           )}
           {gameState === 'RUNNING' && (
             <>
-              <Text fw={700}>
-                {l('page.compare.start.title')} ({matchIndex + 1}/
-                {matches.length})
-              </Text>
+              <Flex
+                gap="md"
+                direction={{ base: 'column', md: 'row' }}
+                justify="space-between"
+                align={{ base: 'flex-end', md: 'center' }}
+              >
+                <Text fw={700}>
+                  {l('page.compare.start.title')} ({ranking?.matches.length}{' '}
+                  {l('page.compare.matchesRemaining')})
+                </Text>
+
+                <Tooltip
+                  multiline
+                  w={320}
+                  label={l('page.compare.tooltip')}
+                  refProp="rootRef"
+                >
+                  <Switch
+                    label={l('page.compare.start.switch')}
+                    checked={quickCompare}
+                    onChange={(event) =>
+                      setQuickCompare(event.currentTarget.checked)
+                    }
+                  />
+                </Tooltip>
+              </Flex>
               <Flex my="lg" gap="md" direction={{ base: 'column', md: 'row' }}>
-                <UnstyledButton
-                  flex="1"
-                  onClick={() => runMatch(matches[matchIndex]?.[0])}
-                >
-                  <Card shadow="sm" padding="lg" radius="md" withBorder>
-                    {matches[matchIndex]?.[0]}
-                  </Card>
-                </UnstyledButton>
-                <UnstyledButton
-                  flex="1"
-                  onClick={() => runMatch(matches[matchIndex]?.[1])}
-                >
-                  <Card shadow="sm" padding="lg" radius="md" withBorder>
-                    {matches[matchIndex]?.[1]}
-                  </Card>
-                </UnstyledButton>
+                {match?.map((value, index) => (
+                  <UnstyledButton
+                    flex="1"
+                    key={value}
+                    onClick={() =>
+                      runMatch(
+                        value,
+                        match?.[index === 0 ? index + 1 : index - 1]
+                      )
+                    }
+                  >
+                    <Card
+                      py="50px"
+                      withBorder
+                      ta="center"
+                      radius="md"
+                      shadow="sm"
+                      padding="lg"
+                    >
+                      {value}
+                    </Card>
+                  </UnstyledButton>
+                ))}
               </Flex>
             </>
           )}
