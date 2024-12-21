@@ -54,16 +54,8 @@ function Compare() {
   }
 
   function runMatch(selected: string) {
-    const [a, b] = matches[matchIndex];
-
     // Update results
-    if (selected === a) {
-      results[a] += 1;
-      results[b] -= 1;
-    } else {
-      results[a] -= 1;
-      results[b] += 1;
-    }
+    results[selected] += 1;
 
     setResults(results);
     setMatchIndex((index) => index + 1);
