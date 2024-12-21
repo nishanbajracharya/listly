@@ -18,6 +18,8 @@
   "page.compare.button.complete": "Go to Ranking",
   "page.compare.start.title": "Choose between the following items",
   "page.compare.done.title": "You have compared all items. Click the button below to see the ranking.",
+  "page.compare.empty": "No items to compare. Please enter a list of items.",
+  "page.compare.home": "Go home",
   "page.rank.title": "Rank",
   "page.rank.table.rank": "Rank",
   "page.rank.table.title": "Title",

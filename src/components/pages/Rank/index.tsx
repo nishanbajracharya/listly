@@ -1,6 +1,6 @@
 import { Link } from 'wouter';
 import { useLocalStorage } from '@mantine/hooks';
-import { Container, Text, Table, Group } from '@mantine/core';
+import { Container, Text, Table, Group, Button } from '@mantine/core';
 
 import { l } from '../../../modules/language';
 
@@ -36,7 +36,11 @@ function Rank() {
       ) : (
         <Group>
           <Text>{l('page.rank.empty')}</Text>
-          <Link href="/">{l('page.rank.home')}</Link>
+          <Link href="/" asChild>
+            <Button variant="filled" color="blue" fullWidth>
+              {l('page.rank.home')}
+            </Button>
+          </Link>
         </Group>
       )}
     </Container>

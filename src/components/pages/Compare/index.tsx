@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from '@mantine/hooks';
 import {
-  Container,
   Text,
-  Button,
-  UnstyledButton,
   Card,
   Flex,
+  Group,
+  Button,
+  Container,
+  UnstyledButton,
 } from '@mantine/core';
 
 import { l } from '../../../modules/language';
@@ -91,59 +92,73 @@ function Compare() {
       <Text size="xl" fw={700} mb="md">
         {l('page.compare.title')}
       </Text>
-      <Text size="md" mb="lg">
-        {l('page.compare.description')}
-      </Text>
-      {gameState === 'START' && (
-        <Button
-          variant="filled"
-          color="blue"
-          fullWidth
-          onClick={startComparison}
-        >
-          {l('page.compare.button.start')}
-        </Button>
-      )}
-      {gameState === 'RUNNING' && (
+      {list && Array.isArray(list) && list.length > 0 ? (
         <>
-          <Text fw={700}>
-            {l('page.compare.start.title')} ({matchIndex + 1}/{matches.length})
+          <Text size="md" mb="lg">
+            {l('page.compare.description')}
           </Text>
-          <Flex my="lg" gap="md" direction={{ base: 'column', md: 'row' }}>
-            <UnstyledButton
-              flex="1"
-              onClick={() => runMatch(matches[matchIndex]?.[0])}
-            >
-              <Card shadow="sm" padding="lg" radius="md" withBorder>
-                {matches[matchIndex]?.[0]}
-              </Card>
-            </UnstyledButton>
-            <UnstyledButton
-              flex="1"
-              onClick={() => runMatch(matches[matchIndex]?.[1])}
-            >
-              <Card shadow="sm" padding="lg" radius="md" withBorder>
-                {matches[matchIndex]?.[1]}
-              </Card>
-            </UnstyledButton>
-          </Flex>
-        </>
-      )}
-      {gameState === 'DONE' && (
-        <>
-          <Text fw={700}>{l('page.compare.done.title')}</Text>
-          <Link href="/rank" asChild>
+          {gameState === 'START' && (
             <Button
               variant="filled"
               color="blue"
               fullWidth
               onClick={startComparison}
-              my="lg"
             >
-              {l('page.compare.button.complete')}
+              {l('page.compare.button.start')}
+            </Button>
+          )}
+          {gameState === 'RUNNING' && (
+            <>
+              <Text fw={700}>
+                {l('page.compare.start.title')} ({matchIndex + 1}/
+                {matches.length})
+              </Text>
+              <Flex my="lg" gap="md" direction={{ base: 'column', md: 'row' }}>
+                <UnstyledButton
+                  flex="1"
+                  onClick={() => runMatch(matches[matchIndex]?.[0])}
+                >
+                  <Card shadow="sm" padding="lg" radius="md" withBorder>
+                    {matches[matchIndex]?.[0]}
+                  </Card>
+                </UnstyledButton>
+                <UnstyledButton
+                  flex="1"
+                  onClick={() => runMatch(matches[matchIndex]?.[1])}
+                >
+                  <Card shadow="sm" padding="lg" radius="md" withBorder>
+                    {matches[matchIndex]?.[1]}
+                  </Card>
+                </UnstyledButton>
+              </Flex>
+            </>
+          )}
+          {gameState === 'DONE' && (
+            <>
+              <Text fw={700}>{l('page.compare.done.title')}</Text>
+              <Link href="/rank" asChild>
+                <Button
+                  variant="filled"
+                  color="blue"
+                  fullWidth
+                  onClick={startComparison}
+                  my="lg"
+                >
+                  {l('page.compare.button.complete')}
+                </Button>
+              </Link>
+            </>
+          )}
+        </>
+      ) : (
+        <Group>
+          <Text>{l('page.compare.empty')}</Text>
+          <Link href="/" asChild>
+            <Button variant="filled" color="blue" fullWidth>
+              {l('page.compare.home')}
             </Button>
           </Link>
-        </>
+        </Group>
       )}
     </Container>
   );
