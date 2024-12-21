@@ -6,5 +6,7 @@
   "page.home.title": "Enter a list of items to compare",
   "page.home.subtitle": "Either comma separated or new line separated list of items to compare",
   "page.compare.title": "Compare",
-  "page.rank.title": "Rank"
+  "page.rank.title": "Rank",
+  "page.rank.table.rank": "Rank",
+  "page.rank.table.title": "Title"
 }
