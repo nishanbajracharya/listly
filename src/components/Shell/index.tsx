@@ -15,6 +15,7 @@ import {
 import { language } from '../../modules/language';
 
 import Nav from '../Router/Nav';
+import RouteSwitch from '../Router/RouteSwitch';
 
 function Shell() {
   const [opened, { toggle }] = useDisclosure();
@@ -60,7 +61,9 @@ function Shell() {
         <Nav />
       </AppShell.Navbar>
 
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main>
+        <RouteSwitch />
+      </AppShell.Main>
     </AppShell>
   );
 }
