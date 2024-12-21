@@ -5,8 +5,17 @@
   "shell.nav.rank": "Rank",
   "page.home.title": "Enter a list of items to compare",
   "page.home.subtitle": "Either comma separated or new line separated list of items to compare",
+  "page.home.textArea.placeholder": "Place items here",
+  "page.home.button.save": "Save",
+  "page.home.button.clear": "Clear",
+  "page.home.modal.title": "Clear List",
+  "page.home.modal.text": "Are you sure you want to clear the list?",
+  "page.home.modal.yes": "Yes, clear list",
+  "page.home.modal.no": "No, go back",
   "page.compare.title": "Compare",
   "page.rank.title": "Rank",
   "page.rank.table.rank": "Rank",
-  "page.rank.table.title": "Title"
+  "page.rank.table.title": "Title",
+  "page.rank.empty": "No items to rank. Please enter a list of items to compare.",
+  "page.rank.home": "Go home"
 }

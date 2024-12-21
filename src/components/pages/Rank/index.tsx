@@ -1,5 +1,6 @@
+import { Link } from 'wouter';
 import { useLocalStorage } from '@mantine/hooks';
-import { Container, Text, Table } from '@mantine/core';
+import { Container, Text, Table, Group } from '@mantine/core';
 
 import { language } from '../../../modules/language';
 
@@ -15,24 +16,29 @@ function Rank() {
         {language('page.rank.title')}
       </Text>
 
-      <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th w={60}>{language('page.rank.table.rank')}</Table.Th>
-            <Table.Th>{language('page.rank.table.title')}</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {list &&
-            Array.isArray(list) &&
-            list.map((item, index) => (
+      {list && Array.isArray(list) && list.length > 0 ? (
+        <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th w={60}>{language('page.rank.table.rank')}</Table.Th>
+              <Table.Th>{language('page.rank.table.title')}</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {list.map((item, index) => (
               <Table.Tr key={index}>
                 <Table.Td>{index + 1}</Table.Td>
                 <Table.Td>{item}</Table.Td>
               </Table.Tr>
             ))}
-        </Table.Tbody>
-      </Table>
+          </Table.Tbody>
+        </Table>
+      ) : (
+        <Group>
+          <Text>{language('page.rank.empty')}</Text>
+          <Link href="/">{language('page.rank.home')}</Link>
+        </Group>
+      )}
     </Container>
   );
 }
