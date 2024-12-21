@@ -1,6 +1,16 @@
+import { useEffect } from 'react';
+import { CiDark } from 'react-icons/ci';
+import { CiLight } from 'react-icons/ci';
 import { PiRanking } from 'react-icons/pi';
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Group, Text } from '@mantine/core';
+import {
+  Text,
+  Group,
+  Burger,
+  AppShell,
+  ActionIcon,
+  useMantineColorScheme,
+} from '@mantine/core';
 
 import lang from '../../constants/localization/en.json';
 
@@ -8,6 +18,16 @@ import Nav from '../Router/Nav';
 
 function Shell() {
   const [opened, { toggle }] = useDisclosure();
+
+  const { setColorScheme, clearColorScheme, colorScheme, toggleColorScheme } =
+    useMantineColorScheme();
+
+  useEffect(() => {
+    setColorScheme(colorScheme);
+    return () => {
+      clearColorScheme();
+    };
+  });
 
   return (
     <AppShell
@@ -23,9 +43,16 @@ function Shell() {
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <PiRanking size={30} />
-          <Text size="xl" ml="sm">
+          <Text size="xl" ml="sm" flex={1}>
             {lang['base.app.title']}
           </Text>
+          <ActionIcon variant="default" onClick={() => toggleColorScheme()}>
+            {colorScheme === 'light' ? (
+              <CiDark size={25} />
+            ) : (
+              <CiLight size={25} />
+            )}
+          </ActionIcon>
         </Group>
       </AppShell.Header>
 

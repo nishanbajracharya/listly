@@ -30,7 +30,7 @@ function Nav() {
   return (
     <>
       {Object.values(routes).map((route) => (
-        <Link asChild href={route.path}>
+        <Link asChild href={route.path} key={route.path}>
           <NavLink
             label={route.label}
             active={location === route.path}
