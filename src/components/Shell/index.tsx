@@ -16,6 +16,7 @@ import {
 import { l } from '../../modules/language';
 
 import Nav from '../Router/Nav';
+import BottomNav from '../Router/BottomNav';
 import RouteSwitch from '../Router/RouteSwitch';
 
 function Shell() {
@@ -71,6 +72,9 @@ function Shell() {
       <AppShell.Main>
         <RouteSwitch />
       </AppShell.Main>
+      <AppShell.Footer hiddenFrom="sm" withBorder={false}>
+        <BottomNav />
+      </AppShell.Footer>
     </AppShell>
   );
 }
