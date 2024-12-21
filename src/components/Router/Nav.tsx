@@ -4,22 +4,22 @@ import { PiRanking } from 'react-icons/pi';
 import { RiHome2Line } from 'react-icons/ri';
 import { MdOutlineCompareArrows } from 'react-icons/md';
 
-import lang from '../../constants/localization/en.json';
+import { language } from '../../modules/language';
 
 const routes = {
   HOME: {
     path: '/',
-    label: lang['shell.nav.home'],
+    label: language('shell.nav.home'),
     icon: <RiHome2Line />,
   },
   COMPARE: {
     path: '/compare',
-    label: lang['shell.nav.compare'],
+    label: language('shell.nav.compare'),
     icon: <MdOutlineCompareArrows />,
   },
   RANK: {
     path: '/rank',
-    label: lang['shell.nav.rank'],
+    label: language('shell.nav.rank'),
     icon: <PiRanking />,
   },
 };
