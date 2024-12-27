@@ -12,6 +12,7 @@ import {
 } from '@mantine/core';
 import { IoCopy } from 'react-icons/io5';
 import { IoMdShare } from 'react-icons/io';
+import { LuDownload } from 'react-icons/lu';
 
 import { l } from '../../../modules/language';
 import { encode, decode } from '../../../modules/encoding';
@@ -47,6 +48,20 @@ function Rank() {
       title: l('page.rank.notification.share'),
       message: link
     });
+  }
+
+  function download(list: string[]) {
+    let content = 'Rank,Title\n';
+
+    list.forEach((item, index) => {
+      content += `${index + 1},${item}\n`;
+    });
+
+    let anchor = document.createElement('a');
+    anchor.href = `data:text/csv;charset=utf-8,${encodeURI(content)}`;
+    anchor.target = '_blank';
+    anchor.download = 'list.csv';
+    anchor.click();
   }
 
   useEffect(() => {
@@ -100,6 +115,11 @@ function Rank() {
                 <IoMdShare size={15} />
               </ActionIcon>
             </Tooltip>}
+            <Tooltip label={l('page.rank.download')}>
+              <ActionIcon variant="default" onClick={() => download(displayList)}>
+                <LuDownload size={15} />
+              </ActionIcon>
+            </Tooltip>
             <Tooltip label={l('page.rank.copy')}>
               <ActionIcon variant="default" onClick={() => {
                 copyToClipboard(displayList.join('\n'))

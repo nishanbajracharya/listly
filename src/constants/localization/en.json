@@ -32,6 +32,7 @@
   "page.rank.home": "Go home",
   "page.rank.copy": "Copy to Clipboard",
   "page.rank.share": "Get Sharable Link",
+  "page.rank.download": "Download List CSV",
   "page.rank.notification.copy": "Copied list to clipboard",
   "page.rank.notification.share": "Copied sharable link to clipboard"
 }
