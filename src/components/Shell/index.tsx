@@ -53,7 +53,7 @@ function Shell() {
                 : l('shell.lightMode')
             }
           >
-            <ActionIcon variant="default" onClick={() => toggleColorScheme()}>
+            <ActionIcon variant="default" onClick={() => toggleColorScheme()} aria-label="Color Scheme Button">
               {colorScheme === 'light' ? (
                 <CiDark size={25} />
               ) : (

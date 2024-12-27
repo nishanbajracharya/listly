@@ -14,6 +14,7 @@ function Nav() {
             label={route.label}
             active={location === route.path}
             leftSection={<route.Icon />}
+            aria-label={route.label}
           />
         </Link>
       ))}
