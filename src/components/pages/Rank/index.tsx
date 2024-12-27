@@ -26,11 +26,8 @@ function Rank() {
   const [isShowingSharedLink, setIsShowingSharedLink] = useState(false);
   const [sharedRank, setSharedRank] = useState<string[]>([]);
 
-  function copyToClipboard(text: string, notificationMessage: string = '') {
+  function copyToClipboard(text: string) {
     navigator.clipboard.writeText(text);
-    notifications.show({
-      message: notificationMessage,
-    });
   }
 
   function share() {
@@ -42,10 +39,14 @@ function Rank() {
     const encodedList = encode(listData);
 
     const url = new URL(window.location.href);
-    
+
     const link = `${url.origin}${url.pathname}?rank=${encodedList}`;
 
-    copyToClipboard(link, l('page.rank.notification.share'));
+    copyToClipboard(link);
+    notifications.show({
+      title: l('page.rank.notification.share'),
+      message: link
+    });
   }
 
   useEffect(() => {
@@ -61,7 +62,7 @@ function Rank() {
 
         setIsShowingSharedLink(true);
         setSharedRank(parsedRank.data.split('\n'));
-      } catch(_) {
+      } catch (_) {
         // noop
       }
     }
@@ -100,7 +101,14 @@ function Rank() {
               </ActionIcon>
             </Tooltip>}
             <Tooltip label={l('page.rank.copy')}>
-              <ActionIcon variant="default" onClick={() => copyToClipboard(displayList.join('\n'), l('page.rank.notification.copy'))}>
+              <ActionIcon variant="default" onClick={() => {
+                copyToClipboard(displayList.join('\n'))
+
+                notifications.show({
+                  title: l('page.rank.notification.copy'),
+                  message: ''
+                });
+              }}>
                 <IoCopy size={15} />
               </ActionIcon>
             </Tooltip>
