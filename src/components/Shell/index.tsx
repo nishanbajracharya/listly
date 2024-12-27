@@ -11,9 +11,8 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 
-import { l } from '../../modules/language';
-
 import Nav from '../Router/Nav';
+import { l } from '../../modules/language';
 import BottomNav from '../Router/BottomNav';
 import RouteSwitch from '../Router/RouteSwitch';
 
