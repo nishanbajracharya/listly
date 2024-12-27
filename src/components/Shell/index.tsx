@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
-import { useLocation } from 'wouter';
 import { CiDark } from 'react-icons/ci';
 import { CiLight } from 'react-icons/ci';
 import { PiRanking } from 'react-icons/pi';
-import { useDisclosure } from '@mantine/hooks';
 import {
   Text,
   Group,
-  Burger,
   Tooltip,
   AppShell,
   ActionIcon,
@@ -21,8 +18,6 @@ import BottomNav from '../Router/BottomNav';
 import RouteSwitch from '../Router/RouteSwitch';
 
 function Shell() {
-  const [opened, { toggle, close }] = useDisclosure();
-
   const { setColorScheme, clearColorScheme, colorScheme, toggleColorScheme } =
     useMantineColorScheme();
 
@@ -33,25 +28,21 @@ function Shell() {
     };
   });
 
-  const [location] = useLocation();
-
-  useEffect(() => {
-    close();
-  }, [location, close]);
-
   return (
     <AppShell
       header={{ height: 60 }}
       navbar={{
         width: 300,
         breakpoint: 'sm',
-        collapsed: { mobile: !opened },
+        collapsed: {
+          desktop: false,
+          mobile: true
+        }
       }}
       padding="md"
     >
       <AppShell.Header>
         <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <PiRanking size={30} />
           <Text size="xl" ml="sm" flex={1}>
             {l('base.app.title')}

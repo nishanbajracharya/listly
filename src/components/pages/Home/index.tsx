@@ -4,6 +4,7 @@ import { useLocalStorage, useDisclosure } from '@mantine/hooks';
 import { Container, Text, Textarea, Button, Flex, Modal } from '@mantine/core';
 
 import { l } from '../../../modules/language';
+import * as notifications from '../../../modules/notification';
 
 function Home() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -39,6 +40,12 @@ function Home() {
 
     // Save list
     setList(uniqueItems);
+
+    // Notification
+    notifications.show({
+      title: l('page.home.notification.save'),
+      message: ''
+    });
   }
 
   useEffect(() => {

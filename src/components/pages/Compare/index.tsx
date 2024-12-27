@@ -62,7 +62,7 @@ function Compare() {
       <Text size="xl" fw={700} mb="md">
         {l('page.compare.title')}
       </Text>
-      {list && Array.isArray(list) && list.length > 0 ? (
+      {list && Array.isArray(list) && list.length > 1 ? (
         <>
           <Text size="md" mb="lg">
             {l('page.compare.description')}
