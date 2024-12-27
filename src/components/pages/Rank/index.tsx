@@ -1,4 +1,5 @@
 import { Link } from 'wouter';
+import { useEffect, useState } from 'react';
 import { useLocalStorage } from '@mantine/hooks';
 import {
   Text,
@@ -10,8 +11,11 @@ import {
   ActionIcon,
 } from '@mantine/core';
 import { IoCopy } from 'react-icons/io5';
+import { IoMdShare } from 'react-icons/io';
 
 import { l } from '../../../modules/language';
+import { encode, decode } from '../../../modules/encoding';
+import * as notifications from '../../../modules/notification';
 
 function Rank() {
   const [list] = useLocalStorage<string[]>({
@@ -19,9 +23,51 @@ function Rank() {
     defaultValue: [],
   });
 
-  function copyToClipboard() {
-    navigator.clipboard.writeText(list.join('\n'));
+  const [isShowingSharedLink, setIsShowingSharedLink] = useState(false);
+  const [sharedRank, setSharedRank] = useState<string[]>([]);
+
+  function copyToClipboard(text: string, notificationMessage: string = '') {
+    navigator.clipboard.writeText(text);
+    notifications.show({
+      message: notificationMessage,
+    });
   }
+
+  function share() {
+    const listData = JSON.stringify({
+      data: list.join('\n'),
+      source: 'listly'
+    });
+
+    const encodedList = encode(listData);
+
+    const url = new URL(window.location.href);
+    
+    const link = `${url.origin}${url.pathname}?rank=${encodedList}`;
+
+    copyToClipboard(link, l('page.rank.notification.share'));
+  }
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+
+    const encodedRank = url.searchParams.get('rank');
+
+    if (encodedRank) {
+      const decodedRank = decode(encodedRank);
+
+      try {
+        const parsedRank = JSON.parse(decodedRank);
+
+        setIsShowingSharedLink(true);
+        setSharedRank(parsedRank.data.split('\n'));
+      } catch(_) {
+        // noop
+      }
+    }
+  }, []);
+
+  const displayList = isShowingSharedLink ? sharedRank : list;
 
   return (
     <Container>
@@ -29,7 +75,7 @@ function Rank() {
         {l('page.rank.title')}
       </Text>
 
-      {list && Array.isArray(list) && list.length > 0 ? (
+      {displayList && Array.isArray(displayList) && displayList.length > 0 ? (
         <>
           <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
             <Table.Thead>
@@ -39,7 +85,7 @@ function Rank() {
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {list.map((item, index) => (
+              {displayList.map((item, index) => (
                 <Table.Tr key={index}>
                   <Table.Td>{index + 1}</Table.Td>
                   <Table.Td>{item}</Table.Td>
@@ -48,8 +94,13 @@ function Rank() {
             </Table.Tbody>
           </Table>
           <Group mt="lg" justify="flex-end">
+            {!isShowingSharedLink && <Tooltip label={l('page.rank.share')}>
+              <ActionIcon variant="default" onClick={share}>
+                <IoMdShare size={15} />
+              </ActionIcon>
+            </Tooltip>}
             <Tooltip label={l('page.rank.copy')}>
-              <ActionIcon variant="default" onClick={copyToClipboard}>
+              <ActionIcon variant="default" onClick={() => copyToClipboard(displayList.join('\n'), l('page.rank.notification.copy'))}>
                 <IoCopy size={15} />
               </ActionIcon>
             </Tooltip>

@@ -30,5 +30,8 @@
   "page.rank.table.title": "Title",
   "page.rank.empty": "No items to rank. Please enter a list of items to compare.",
   "page.rank.home": "Go home",
-  "page.rank.copy": "Copy to Clipboard"
+  "page.rank.copy": "Copy to Clipboard",
+  "page.rank.share": "Get Sharable Link",
+  "page.rank.notification.copy": "Copied list to clipboard",
+  "page.rank.notification.share": "Copied sharable link to clipboard"
 }
