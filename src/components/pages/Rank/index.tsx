@@ -93,7 +93,7 @@ function Rank() {
 
       {displayList && Array.isArray(displayList) && displayList.length > 0 ? (
         <>
-          <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60}>
+          <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60} withTableBorder>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th w={60}>{l('page.rank.table.rank')}</Table.Th>
