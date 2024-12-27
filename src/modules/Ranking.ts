@@ -8,7 +8,7 @@ class Ranking {
   constructor(items: string[]) {
     this.items = items;
 
-    this.matches = this.getMatches(this.items);
+    this.matches = this.getMatches();
 
     items.forEach((item) => {
       this.winnerMap.set(item, []);
@@ -20,7 +20,9 @@ class Ranking {
     }, {} as Record<string, number>);
   }
 
-  getMatches(list: string[]) {
+  getMatches() {
+    const list = this.items;
+    
     return list
       .map((item, index) => {
         const matches = list
