@@ -58,7 +58,7 @@ describe('Compare component', () => {
     fireEvent.click(switchToQuickCompare);
 
     for (let i = 0; i < matchCount; i++) {
-      const index = Math.random() > 0.5 ? 1 : 2;
+      const index = i % 2 === 0 ? 1 : 2;
       const card = screen.getByLabelText<HTMLButtonElement>(`Card ${index}`);
       expect(card).toBeInTheDocument();
 
