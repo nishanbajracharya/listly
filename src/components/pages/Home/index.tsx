@@ -44,7 +44,7 @@ function Home() {
     // Notification
     notifications.show({
       title: l('page.home.notification.save'),
-      message: ''
+      message: '',
     });
   }
 
@@ -63,6 +63,7 @@ function Home() {
         yOffset="30vh"
         opened={opened}
         onClose={close}
+        aria-label="Clear list modal"
         title={l('page.home.modal.title')}
       >
         <Text>{l('page.home.modal.text')}</Text>
@@ -76,15 +77,22 @@ function Home() {
             mt="md"
             color="red"
             type="submit"
+            variant="filled"
             onClick={() => {
               clearForm();
               close();
             }}
-            variant="filled"
+            aria-label="Clear list modal button"
           >
             {l('page.home.modal.yes')}
           </Button>
-          <Button variant="outline" color="blue" onClick={close} mt="md">
+          <Button
+            mt="md"
+            color="blue"
+            onClick={close}
+            variant="outline"
+            aria-label="Close modal button"
+          >
             {l('page.home.modal.no')}
           </Button>
         </Flex>
@@ -98,6 +106,7 @@ function Home() {
           minRows={10}
           maxRows={20}
           key={form.key('list')}
+          aria-label="List input field"
           {...form.getInputProps('list')}
           label={l('page.home.subtitle')}
           placeholder={l('page.home.textArea.placeholder')}
@@ -114,10 +123,17 @@ function Home() {
             type="submit"
             variant="filled"
             flex={{ md: 1 }}
+            aria-label="Save list button"
           >
             {l('page.home.button.save')}
           </Button>
-          <Button variant="outline" color="red" onClick={open} mt="md">
+          <Button
+            mt="md"
+            color="red"
+            onClick={open}
+            variant="outline"
+            aria-label="Clear list button"
+          >
             {l('page.home.button.clear')}
           </Button>
         </Flex>

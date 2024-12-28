@@ -35,8 +35,8 @@ function Shell() {
         breakpoint: 'sm',
         collapsed: {
           desktop: false,
-          mobile: true
-        }
+          mobile: true,
+        },
       }}
       padding="md"
     >
@@ -53,7 +53,11 @@ function Shell() {
                 : l('shell.lightMode')
             }
           >
-            <ActionIcon variant="default" onClick={() => toggleColorScheme()} aria-label="Color Scheme Button">
+            <ActionIcon
+              variant="default"
+              aria-label="Color scheme button"
+              onClick={() => toggleColorScheme()}
+            >
               {colorScheme === 'light' ? (
                 <CiDark size={25} />
               ) : (

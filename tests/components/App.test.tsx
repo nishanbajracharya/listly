@@ -3,8 +3,8 @@ import { describe, it, expect } from 'vitest';
 
 import App from '../../src/App';
 import { l } from '../../src/modules/language';
-import { render, screen, fireEvent } from '../../test-utils';
 import en from '../../src/constants/localization/en.json';
+import { render, screen, fireEvent } from '../../test-utils';
 
 describe('App component', () => {
   const navigation = [
@@ -32,12 +32,12 @@ describe('App component', () => {
         .getAllByText(l(en[nav.lang]))
         .forEach((node) => expect(node).toBeInTheDocument());
 
-      const navButton = screen.getByLabelText(l(en[nav.lang]));
+      const navButton = screen.getByLabelText(`${l(en[nav.lang])} link`);
       fireEvent.click(navButton);
       expect(location.pathname).to.eq(nav.path);
     });
 
-    const colorSchemeButton = screen.getByLabelText('Color Scheme Button');
+    const colorSchemeButton = screen.getByLabelText('Color scheme button');
     expect(colorSchemeButton).toBeInTheDocument();
     fireEvent.click(colorSchemeButton);
   });
