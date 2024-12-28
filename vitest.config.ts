@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -7,7 +7,13 @@ export default defineConfig({
     setupFiles: './vitest.setup.mjs',
     coverage: {
       provider: 'istanbul',
-      exclude: ['**/test-utils/**', '**/tests/**', '**.config.cjs', 'src/main.tsx']
+      exclude: [
+        '**/test-utils/**',
+        '**/tests/**',
+        '**.config.cjs',
+        'src/main.tsx',
+        'dist',
+      ],
     },
   },
 });

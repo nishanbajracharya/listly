@@ -7,24 +7,38 @@ import { render, screen, fireEvent } from '../../test-utils';
 import en from '../../src/constants/localization/en.json';
 
 describe('App component', () => {
+  const navigation = [
+    {
+      lang: 'shell.nav.home',
+      path: '/listly/',
+    },
+    {
+      lang: 'shell.nav.compare',
+      path: '/listly/compare',
+    },
+    {
+      lang: 'shell.nav.rank',
+      path: '/listly/rank',
+    },
+  ];
+
   it('renders App component', () => {
-    const { container } = render(<App />);
+    render(<App />);
 
-    expect(screen.getByText(l(en['base.app.title']))).to.exist;
-    expect(screen.getAllByText(l(en['shell.nav.home']))).to.exist;
-    expect(screen.getAllByText(l(en['shell.nav.compare']))).to.exist;
-    expect(screen.getAllByText(l(en['shell.nav.rank']))).to.exist;
+    expect(screen.getByText(l(en['base.app.title']))).toBeInTheDocument();
 
-    const compareButton = screen.getByLabelText(l(en['shell.nav.compare']));
-    fireEvent.click(compareButton);
-    expect(location.pathname).to.eq('/listly/compare');
+    navigation.forEach((nav) => {
+      screen
+        .getAllByText(l(en[nav.lang]))
+        .forEach((node) => expect(node).toBeInTheDocument());
 
-    const rankButton = screen.getByLabelText(l(en['shell.nav.rank']));
-    fireEvent.click(rankButton);
-    expect(location.pathname).to.eq('/listly/rank');
-    
-    const homeButton = screen.getByLabelText(l(en['shell.nav.home']));
-    fireEvent.click(homeButton);
-    expect(location.pathname).to.eq('/listly/');
+      const navButton = screen.getByLabelText(l(en[nav.lang]));
+      fireEvent.click(navButton);
+      expect(location.pathname).to.eq(nav.path);
+    });
+
+    const colorSchemeButton = screen.getByLabelText('Color Scheme Button');
+    expect(colorSchemeButton).toBeInTheDocument();
+    fireEvent.click(colorSchemeButton);
   });
 });
