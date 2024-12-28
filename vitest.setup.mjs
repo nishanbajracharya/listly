@@ -27,3 +27,7 @@ class ResizeObserver {
 }
 
 window.ResizeObserver = ResizeObserver;
+
+window.navigator.clipboard = {
+  writeText: vi.fn(),
+};

@@ -34,7 +34,7 @@ function Rank() {
   function share() {
     const listData = JSON.stringify({
       data: list.join('\n'),
-      source: 'listly'
+      source: 'listly',
     });
 
     const encodedList = encode(listData);
@@ -46,7 +46,7 @@ function Rank() {
     copyToClipboard(link);
     notifications.show({
       title: l('page.rank.notification.share'),
-      message: link
+      message: link,
     });
   }
 
@@ -57,7 +57,7 @@ function Rank() {
       content += `${index + 1},${item}\n`;
     });
 
-    let anchor = document.createElement('a');
+    const anchor = document.createElement('a');
     anchor.href = `data:text/csv;charset=utf-8,${encodeURI(content)}`;
     anchor.target = '_blank';
     anchor.download = 'list.csv';
@@ -77,7 +77,7 @@ function Rank() {
 
         setIsShowingSharedLink(true);
         setSharedRank(parsedRank.data.split('\n'));
-      } catch (_) {
+      } catch {
         // noop
       }
     }
@@ -93,7 +93,14 @@ function Rank() {
 
       {displayList && Array.isArray(displayList) && displayList.length > 0 ? (
         <>
-          <Table striped stickyHeader highlightOnHover stickyHeaderOffset={60} withTableBorder>
+          <Table
+            striped
+            stickyHeader
+            withTableBorder
+            highlightOnHover
+            aria-label="Rank table"
+            stickyHeaderOffset={60}
+          >
             <Table.Thead>
               <Table.Tr>
                 <Table.Th w={60}>{l('page.rank.table.rank')}</Table.Th>
@@ -110,25 +117,39 @@ function Rank() {
             </Table.Tbody>
           </Table>
           <Group mt="lg" justify="flex-end">
-            {!isShowingSharedLink && <Tooltip label={l('page.rank.share')}>
-              <ActionIcon variant="default" onClick={share}>
-                <IoMdShare size={15} />
-              </ActionIcon>
-            </Tooltip>}
+            {!isShowingSharedLink && (
+              <Tooltip label={l('page.rank.share')}>
+                <ActionIcon
+                  onClick={share}
+                  variant="default"
+                  aria-label="Share button"
+                >
+                  <IoMdShare size={15} />
+                </ActionIcon>
+              </Tooltip>
+            )}
             <Tooltip label={l('page.rank.download')}>
-              <ActionIcon variant="default" onClick={() => download(displayList)}>
+              <ActionIcon
+                variant="default"
+                onClick={() => download(displayList)}
+                aria-label="Download button"
+              >
                 <LuDownload size={15} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label={l('page.rank.copy')}>
-              <ActionIcon variant="default" onClick={() => {
-                copyToClipboard(displayList.join('\n'))
+              <ActionIcon
+                variant="default"
+                aria-label="Copy button"
+                onClick={() => {
+                  copyToClipboard(displayList.join('\n'));
 
-                notifications.show({
-                  title: l('page.rank.notification.copy'),
-                  message: ''
-                });
-              }}>
+                  notifications.show({
+                    title: l('page.rank.notification.copy'),
+                    message: '',
+                  });
+                }}
+              >
                 <IoCopy size={15} />
               </ActionIcon>
             </Tooltip>
@@ -138,7 +159,12 @@ function Rank() {
         <Group>
           <Text>{l('page.rank.empty')}</Text>
           <Link href="/" asChild>
-            <Button variant="filled" color="blue" fullWidth>
+            <Button
+              fullWidth
+              color="blue"
+              variant="filled"
+              aria-label="Go to home button"
+            >
               {l('page.rank.home')}
             </Button>
           </Link>
