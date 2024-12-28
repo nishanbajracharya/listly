@@ -6,7 +6,7 @@ export function getLanguage() {
   if (language) return language;
 
   // get the user's language from the browser
-  const locale = new Intl.Locale(navigator.language || 'en');
+  const locale = new Intl.Locale(navigator.language);
 
   // store the language in local storage
   localStorage.setItem('language', locale.language);

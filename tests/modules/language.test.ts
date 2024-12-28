@@ -1,14 +1,10 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 import { l } from '../../src/modules/language';
 
 import en from '../../src/constants/localization/en.json';
 
 describe('Localization tests', () => {
-  beforeAll(() => {
-
-  });
-
   it('should translate key correctly', () => {
     const key = 'base.app.title';
     const expected = en[key];
@@ -33,5 +29,22 @@ describe('Localization tests', () => {
     const actual = l(key);
 
     expect(actual).to.eq(key);
+  });
+
+  it('should fallback to en language', () => {
+    localStorage.setItem('language', '');
+    const spy = vi.spyOn(navigator, 'language', 'get').mockReturnValue('es');
+    const key = 'base.app.title';
+    const expected = en[key];
+
+    const actual = l(key);
+
+    expect(actual).to.eq(expected);
+
+    console.log(navigator.language);
+
+    spy.mockRestore();
+
+    localStorage.setItem('language', 'en');
   });
 });
