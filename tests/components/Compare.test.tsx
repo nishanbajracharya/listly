@@ -3,9 +3,9 @@ import { Router } from 'wouter';
 import { describe, it, expect } from 'vitest';
 
 import { l } from '../../src/modules/language';
+import { render, screen, fireEvent } from '../__utils';
 import Compare from '../../src/components/pages/Compare';
 import en from '../../src/constants/localization/en.json';
-import { render, screen, fireEvent } from '../../test-utils';
 
 describe('Compare component', () => {
   const list = ['A', 'B', 'C'];

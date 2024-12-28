@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 import { l } from '../../src/modules/language';
 import Home from '../../src/components/pages/Home';
 import en from '../../src/constants/localization/en.json';
-import { render, screen, waitFor, fireEvent } from '../../test-utils';
+import { render, screen, waitFor, fireEvent } from '../__utils';
 
 describe('Home component', () => {
   const listInput = 'A,B,C,D';

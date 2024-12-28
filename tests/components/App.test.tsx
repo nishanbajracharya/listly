@@ -3,8 +3,8 @@ import { describe, it, expect } from 'vitest';
 
 import App from '../../src/App';
 import { l } from '../../src/modules/language';
+import { render, screen, fireEvent } from '../__utils';
 import en from '../../src/constants/localization/en.json';
-import { render, screen, fireEvent } from '../../test-utils';
 
 describe('App component', () => {
   const navigation = [

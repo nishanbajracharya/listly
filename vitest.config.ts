@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       exclude: [
-        '**/test-utils/**',
+        '**/tests/__utils/**',
         '**/tests/**',
         '**.config.cjs',
         'src/main.tsx',

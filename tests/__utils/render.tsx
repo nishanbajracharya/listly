@@ -4,7 +4,7 @@ import { Notifications } from '@mantine/notifications';
 import { render as testingLibraryRender } from '@testing-library/react';
 
 // Import your theme object
-import theme from '../src/theme';
+import theme from '../../src/theme';
 
 export function render(ui: React.ReactNode) {
   return testingLibraryRender(<>{ui}</>, {

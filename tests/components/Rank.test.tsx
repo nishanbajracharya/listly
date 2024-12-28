@@ -6,8 +6,8 @@ import Shell from '../../src/components/Shell';
 import { l } from '../../src/modules/language';
 import Rank from '../../src/components/pages/Rank';
 import { encode } from '../../src/modules/encoding';
+import { render, screen, fireEvent } from '../__utils';
 import en from '../../src/constants/localization/en.json';
-import { render, screen, fireEvent } from '../../test-utils';
 
 describe('Rank component', () => {
   const list = ['A', 'B', 'C'];
