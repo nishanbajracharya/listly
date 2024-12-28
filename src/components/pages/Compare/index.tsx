@@ -42,7 +42,7 @@ function Compare() {
     setGameState('RUNNING');
   }
 
-  function runMatch(winner: string = '', loser: string = '') {
+  function runMatch(winner: string, loser: string) {
     if (ranking && winner && loser) {
       ranking.runMatch(winner, loser, quickCompare);
 
@@ -69,10 +69,11 @@ function Compare() {
           </Text>
           {gameState === 'START' && (
             <Button
-              variant="filled"
-              color="blue"
               fullWidth
+              color="blue"
+              variant="filled"
               onClick={startComparison}
+              aria-label="Start comparison button"
             >
               {l('page.compare.button.start')}
             </Button>
@@ -81,8 +82,8 @@ function Compare() {
             <>
               <Flex
                 gap="md"
-                direction={{ base: 'column', md: 'row' }}
                 justify="space-between"
+                direction={{ base: 'column', md: 'row' }}
                 align={{ base: 'flex-end', md: 'center' }}
               >
                 <Text fw={700}>
@@ -91,14 +92,15 @@ function Compare() {
                 </Text>
 
                 <Tooltip
-                  multiline
                   w={320}
-                  label={l('page.compare.tooltip')}
+                  multiline
                   refProp="rootRef"
+                  label={l('page.compare.tooltip')}
                 >
                   <Switch
-                    label={l('page.compare.start.switch')}
                     checked={quickCompare}
+                    aria-label="Switch to quick compare"
+                    label={l('page.compare.start.switch')}
                     onChange={(event) =>
                       setQuickCompare(event.currentTarget.checked)
                     }
@@ -110,6 +112,7 @@ function Compare() {
                   <UnstyledButton
                     flex="1"
                     key={value}
+                    aria-label={`Card ${index + 1}`}
                     onClick={() =>
                       runMatch(
                         value,
@@ -137,11 +140,11 @@ function Compare() {
               <Text fw={700}>{l('page.compare.done.title')}</Text>
               <Link href="/rank" asChild>
                 <Button
-                  variant="filled"
-                  color="blue"
-                  fullWidth
-                  onClick={startComparison}
                   my="lg"
+                  fullWidth
+                  color="blue"
+                  variant="filled"
+                  aria-label="Go to ranking button"
                 >
                   {l('page.compare.button.complete')}
                 </Button>
@@ -153,7 +156,12 @@ function Compare() {
         <Group>
           <Text>{l('page.compare.empty')}</Text>
           <Link href="/" asChild>
-            <Button variant="filled" color="blue" fullWidth>
+            <Button
+              fullWidth
+              color="blue"
+              variant="filled"
+              aria-label="Go to home button"
+            >
               {l('page.compare.home')}
             </Button>
           </Link>
