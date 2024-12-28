@@ -1,7 +1,8 @@
 import React from 'react';
-import { Router } from 'wouter';
+import { Router, Link } from 'wouter';
 import { describe, it, expect, vi } from 'vitest';
 
+import Shell from '../../src/components/Shell';
 import { l } from '../../src/modules/language';
 import Rank from '../../src/components/pages/Rank';
 import { encode } from '../../src/modules/encoding';
@@ -34,11 +35,22 @@ describe('Rank component', () => {
     expect(location.pathname).to.eq('/listly/');
   });
 
-  it('shold render filled Rank component', () => {
-    const spy = vi.spyOn(navigator.clipboard, 'writeText');
+  it('should render filled Rank component', () => {
+    let copiedText = '';
+    const spy = vi
+      .spyOn(navigator.clipboard, 'writeText')
+      .mockImplementation((data) => {
+        copiedText = data;
+
+        return Promise.resolve();
+      });
     localStorage.setItem('list', JSON.stringify(list));
 
-    render(<Rank />);
+    render(
+      <Router base="/listly">
+        <Rank />
+      </Router>
+    );
 
     expect(
       screen.getAllByText(l(en['page.rank.title']))[0]
@@ -53,8 +65,28 @@ describe('Rank component', () => {
 
     const shareButton = screen.getByLabelText('Share button');
     fireEvent.click(shareButton);
-    expect(spy).toHaveBeenLastCalledWith(
-      `http://localhost:3000/listly/?rank=${encodedList}`
+
+    expect(copiedText).to.include(encodedList);
+
+    const downloadButton = screen.getByLabelText('Download button');
+    fireEvent.click(downloadButton);
+  });
+
+  it('should render Rank component with query params', () => {
+    render(
+      <Router base="/listly">
+        <Shell />
+        <Link href={`/rank?rank=${encodedList}`}>Link to Rank</Link>
+      </Router>
     );
+
+    const linkToRank = screen.getByText('Link to Rank');
+    fireEvent.click(linkToRank);
+
+    expect(
+      screen.getAllByText(l(en['page.rank.title']))[0]
+    ).toBeInTheDocument();
+
+    expect(screen.getByLabelText('Rank table')).toBeInTheDocument();
   });
 });

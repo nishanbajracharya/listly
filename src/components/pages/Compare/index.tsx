@@ -25,9 +25,9 @@ function Compare() {
   const [gameState, setGameState] = useState<'START' | 'RUNNING' | 'DONE'>(
     'START'
   );
-  const [match, setMatch] = useState<string[]>();
-  const [ranking, setRanking] = useState<Ranking>();
+  const [match, setMatch] = useState<string[]>([]);
   const [quickCompare, setQuickCompare] = useState(false);
+  const [ranking, setRanking] = useState<Ranking>(new Ranking([]));
 
   useEffect(() => {
     if (list && list.length > 0) {
@@ -43,18 +43,16 @@ function Compare() {
   }
 
   function runMatch(winner: string, loser: string) {
-    if (ranking && winner && loser) {
-      ranking.runMatch(winner, loser, quickCompare);
+    ranking.runMatch(winner, loser, quickCompare);
 
-      const nextMatch = ranking.getMatch();
+    const nextMatch = ranking.getMatch();
 
-      if (!nextMatch) {
-        setGameState('DONE');
-        return setList(ranking.getResult());
-      }
-
-      setMatch(nextMatch);
+    if (!nextMatch) {
+      setGameState('DONE');
+      return setList(ranking.getResult());
     }
+
+    setMatch(nextMatch);
   }
 
   return (
@@ -116,7 +114,7 @@ function Compare() {
                     onClick={() =>
                       runMatch(
                         value,
-                        match?.[index === 0 ? index + 1 : index - 1]
+                        match[index === 0 ? index + 1 : index - 1]
                       )
                     }
                   >
